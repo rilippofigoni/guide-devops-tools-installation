@@ -35,7 +35,37 @@
 
 https://raw.githubusercontent.com/rancher/k3d/main/install.sh
 
+### 2.1 - CREATE A SIMPLE CLUSTER with K3D
 
+
+>Let’s create a simple cluster with 1 loadbalancer and 1 node (with role of server and agent) with name “dev”:
+
+`k3d cluster create dev --port 8080:80@loadbalancer --port 8443:443@loadbalancer`
+
+`INFO[0000] Prep: Network                                
+INFO[0000] Created network 'k3d-dev' (3e153fa11d3c515c0e1246fe7a945edc226b2bc2ec4bddc5798d5541d94ab50c) 
+INFO[0000] Created volume 'k3d-dev-images'              
+INFO[0001] Creating node 'k3d-dev-server-0'             
+INFO[0003] Pulling image 'docker.io/rancher/k3s:v1.21.3-k3s1' 
+INFO[0023] Creating LoadBalancer 'k3d-dev-serverlb'     
+INFO[0026] Pulling image 'docker.io/rancher/k3d-proxy:4.4.8' 
+INFO[0036] Starting cluster 'dev'                       
+INFO[0036] Starting servers...                          
+INFO[0036] Starting Node 'k3d-dev-server-0'             
+INFO[0042] Starting agents...                           
+INFO[0042] Starting helpers...                          
+INFO[0042] Starting Node 'k3d-dev-serverlb'             
+INFO[0043] (Optional) Trying to get IP of the docker host and inject it into the cluster as 'host.k3d.internal' for easy access 
+INFO[0046] Successfully added host record to /etc/hosts in 2/2 nodes and to the CoreDNS ConfigMap 
+INFO[0046] Cluster 'dev' created successfully!          
+INFO[0046] --kubeconfig-update-default=false --> sets --kubeconfig-switch-context=false 
+INFO[0046] You can now use it like this:                
+kubectl config use-context k3d-dev
+kubectl cluster-info`
+
+`❯ kubectl get nodes
+NAME               STATUS   ROLES                  AGE     VERSION
+k3d-dev-server-0   Ready    control-plane,master   6m48s   v1.21.3+k3s1`
 
 ### 3 - INSTALL DOCKER 
 
@@ -129,3 +159,69 @@ sudo ./aws/install`
 `aws configure`
 
 `AWS Access Key ID [None]:` 
+
+### 7 - JENKINS
+
+##### install Java with apt command
+
+```bash
+sudo apt install openjdk-11-jre-headless
+
+java --version
+```
+
+#### Install Jenkins via its official repository
+
+```bash
+wget -q -O - https://pkg.jenkins.io/debian/jenkins.io.key | sudo apt-key add -
+```
+
+```bash
+sudo sh -c 'echo deb http://pkg.jenkins.io/debian-stable binary/ > /etc/apt/sources.list.d/jenkins.list'
+```
+
+```bash
+ sudo apt update && sudo apt install jenkins
+```
+
+#### Jenkins should start automatically. To confirm this, run the command:
+
+```bash
+sudo systemctl status jenkins
+```
+
+`sudo systemctl status jenkins`
+
+`● jenkins.service - LSB: Start Jenkins at boot time`
+     `Loaded: loaded (/etc/init.d/jenkins; generated)`
+     `Active: active (exited) since Thu 2021-09-02 12:15:10 CEST; 1min 37s ago`
+       `Docs: man:systemd-sysv-generator(8)`
+    `Process: 18074 ExecStart=/etc/init.d/jenkins start (code=exited, status=0/SUCCESS)`
+
+`set 02 12:15:08 pop-os systemd[1]: Starting LSB: Start Jenkins at boot time...`
+`set 02 12:15:08 pop-os jenkins[18074]: Correct java version found`
+`set 02 12:15:08 pop-os jenkins[18074]:  * Starting Jenkins Automation Server jenkins`
+`set 02 12:15:09 pop-os su[18115]: (to jenkins) root on none`
+`set 02 12:15:09 pop-os su[18115]: pam_unix(su-l:session): session opened for user jenkins by (uid=0)`
+`set 02 12:15:09 pop-os su[18115]: pam_unix(su-l:session): session closed for user jenkins`
+`set 02 12:15:10 pop-os jenkins[18074]:    ...done.`
+`set 02 12:15:10 pop-os systemd[1]: Started LSB: Start Jenkins at boot time.`
+
+#### Configure Jenkins with GUI
+
+http://localhost:8080 (or IP local)
+
+#### To find password:
+
+```bash
+cat /var/lib/jenkins/secrets/initialAdminPassword
+```
+
+#### After follow instructions on :
+
+https://www.linuxtechi.com/install-configure-jenkins-ubuntu-20-04/
+
+
+
+
+
