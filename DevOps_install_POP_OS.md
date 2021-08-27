@@ -35,7 +35,37 @@
 
 https://raw.githubusercontent.com/rancher/k3d/main/install.sh
 
+### 2.1 - CREATE A SIMPLE CLUSTER with K3D
 
+
+>Let’s create a simple cluster with 1 loadbalancer and 1 node (with role of server and agent) with name “dev”:
+
+`k3d cluster create dev --port 8080:80@loadbalancer --port 8443:443@loadbalancer`
+
+`INFO[0000] Prep: Network                                
+INFO[0000] Created network 'k3d-dev' (3e153fa11d3c515c0e1246fe7a945edc226b2bc2ec4bddc5798d5541d94ab50c) 
+INFO[0000] Created volume 'k3d-dev-images'              
+INFO[0001] Creating node 'k3d-dev-server-0'             
+INFO[0003] Pulling image 'docker.io/rancher/k3s:v1.21.3-k3s1' 
+INFO[0023] Creating LoadBalancer 'k3d-dev-serverlb'     
+INFO[0026] Pulling image 'docker.io/rancher/k3d-proxy:4.4.8' 
+INFO[0036] Starting cluster 'dev'                       
+INFO[0036] Starting servers...                          
+INFO[0036] Starting Node 'k3d-dev-server-0'             
+INFO[0042] Starting agents...                           
+INFO[0042] Starting helpers...                          
+INFO[0042] Starting Node 'k3d-dev-serverlb'             
+INFO[0043] (Optional) Trying to get IP of the docker host and inject it into the cluster as 'host.k3d.internal' for easy access 
+INFO[0046] Successfully added host record to /etc/hosts in 2/2 nodes and to the CoreDNS ConfigMap 
+INFO[0046] Cluster 'dev' created successfully!          
+INFO[0046] --kubeconfig-update-default=false --> sets --kubeconfig-switch-context=false 
+INFO[0046] You can now use it like this:                
+kubectl config use-context k3d-dev
+kubectl cluster-info`
+
+`❯ kubectl get nodes
+NAME               STATUS   ROLES                  AGE     VERSION
+k3d-dev-server-0   Ready    control-plane,master   6m48s   v1.21.3+k3s1`
 
 ### 3 - INSTALL DOCKER 
 
