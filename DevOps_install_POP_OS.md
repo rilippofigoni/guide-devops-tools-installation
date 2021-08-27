@@ -92,9 +92,6 @@ echo "deb https://baltocdn.com/helm/stable/debian/ all main" | sudo tee /etc/apt
 sudo apt-get update
 sudo apt-get install helm
 ```
-
-
-
 ### 5 - INSTALL TERRAFORM
 
 #### From Official Repository :

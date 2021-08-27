@@ -2,7 +2,7 @@
 
 echo "Enter Your Name"
 read name
-echo "Welcome $name to OHMYSHELL installatio script"
+echo "Welcome $name to OHMYSHELL installation script"
 
 sudo apt-get update
 sudo apt-get install zsh
