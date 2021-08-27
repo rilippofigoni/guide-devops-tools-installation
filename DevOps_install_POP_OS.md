@@ -1,8 +1,8 @@
 ## GUIDE TO INSTALL VARIOUS DEVOPS TOOLS ON POP_OS & (debian based distros)
 
-###  1 - INSTALL KUBECTL (K8S)
+###  1 - INSTALL KUBECTL (Kubernetes - K8S)
 
-#### Install using native package management Debian-based distributions :
+#### Install using native package management Debian-based distributions:
 
 1. ***Update the apt package index and install packages needed to use the Kubernetes apt repository:***
 
