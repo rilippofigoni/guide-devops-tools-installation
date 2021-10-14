@@ -225,144 +225,123 @@ https://www.linuxtechi.com/install-configure-jenkins-ubuntu-20-04/
 
 
 
-### - 8 : MINIKUBE:
+### 8 -  MINIKUBE
 
-Download minikube
+#### Download minikube
+
 You need to download the minikube binary. I will put the binary under /usr/local/bin directory since it is inside $PATH.
-wget https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
-chmod +x minikube-linux-amd64
-sudo mv minikube-linux-amd64 /usr/local/bin/minikube
-Confirm version installed
 
-$ minikube version
-minikube version: v1.9.2
-commit: 93af9c1e43cab9618e301bc9fa720c63d5efa393
-Step 4: Install kubectl on Ubuntu / Debian
-We need kubectl which is a command line tool used to deploy and manage applications on Kubernetes:
+`wget https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64`
+`chmod +x minikube-linux-amd64`
+`sudo mv minikube-linux-amd64 /usr/local/bin/minikube`
+`Confirm version installed`
 
-curl -LO https://storage.googleapis.com/kubernetes-release/release/`curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt`/bin/linux/amd64/kubectl
-Make the kubectl binary executable.
+`$ minikube version`
+`minikube version: v1.9.2`
+`commit: 93af9c1e43cab9618e301bc9fa720c63d5efa393`
 
-chmod +x ./kubectl
-Move the binary in to your PATH:
-sudo mv ./kubectl /usr/local/bin/kubectl
-Check version:
-
-# kubectl version -o json 
-{
-  "clientVersion": {
-    "major": "1",
-    "minor": "10",
-    "gitVersion": "v1.10.4",
-    "gitCommit": "5ca598b4ba5abb89bb773071ce452e33fb66339d",
-    "gitTreeState": "clean",
-    "buildDate": "2018-06-06T08:13:03Z",
-    "goVersion": "go1.9.3",
-    "compiler": "gc",
-    "platform": "linux/amd64"
-  }
-}
-Step 5: Starting minikube
+#### Starting minikube
 Now that components are installed, you can start minikube. VM image will be downloaded and configure d for Kubernetes single node cluster.
 
-$ minikube start
-Starting local Kubernetes v1.10.0 cluster...
-Starting VM...
-Downloading Minikube ISO
-150.53 MB / 150.53 MB [============================================] 100.00% 0s
-Getting VM IP address...
-Moving files into cluster...
-Downloading kubeadm v1.10.0
-Downloading kubelet v1.10.0
-Finished Downloading kubeadm v1.10.0
-Finished Downloading kubelet v1.10.0
-Setting up certs...
-Connecting to cluster...
-Setting up kubeconfig...
-Starting cluster components...
-Kubectl is now configured to use the cluster.
-Loading cached images from config file.
+`$ minikube start`
+`Starting local Kubernetes v1.10.0 cluster...`
+`Starting VM...`
+`Downloading Minikube ISO`
+`150.53 MB / 150.53 MB [============================================] 100.00% 0s`
+`Getting VM IP address...`
+`Moving files into cluster...`
+`Downloading kubeadm v1.10.0`
+`Downloading kubelet v1.10.0`
+`Finished Downloading kubeadm v1.10.0`
+`Finished Downloading kubelet v1.10.0`
+`Setting up certs...`
+`Connecting to cluster...`
+`Setting up kubeconfig...`
+`Starting cluster components...`
+`Kubectl is now configured to use the cluster.`
+`Loading cached images from config file.`
+
 Wait for the download and setup to finish then confirm that everything is working fine.
 
-Step 6: Minikube Basic operations
+#### Minikube Basic operations
+
 To check cluster status, run:
 
-$ kubectl cluster-info
+`$ kubectl cluster-info`
 
-Kubernetes master is running at https://192.168.39.117:8443
-KubeDNS is running at https://192.168.39.117:8443/api/v1/namespaces/kube-system/services/kube-dns:dns/proxy
+`Kubernetes master is running at https://192.168.39.117:8443`
+`KubeDNS is running at https://192.168.39.117:8443/api/v1/namespaces/kube-system/services/kube-dns:dns/proxy`
 
 To further debug and diagnose cluster problems, use 'kubectl cluster-info dump'.
 Note that Minikube configuration file is located under ~/.minikube/machines/minikube/config.json
 
 To View Config, use:
 
-$ kubectl config view
+`$ kubectl config view`
 
-apiVersion: v1
-clusters:
-- cluster:
-    certificate-authority: /home/jmutai/.minikube/ca.crt
-    server: https://192.168.39.117:8443
-  name: minikube
-contexts:
-- context:
-    cluster: minikube
-    user: minikube
-  name: minikube
-current-context: minikube
-kind: Config
-preferences: {}
-users:
-- name: minikube
-  user:
-    client-certificate: /home/jmutai/.minikube/client.crt
-    client-key: /home/jmutai/.minikube/client.key
-To check running nodes:
+`apiVersion: v1`
+`clusters:`
 
-$ kubectl get nodes
-NAME       STATUS    ROLES     AGE       VERSION
-minikube   Ready     master    13m       v1.10.0
-Access minikube VM using ssh:
+- `cluster:`
+    `certificate-authority: /home/jmutai/.minikube/ca.crt`
+    `server: https://192.168.39.117:8443`
+  `name: minikube`
+    `contexts:`
+- `context:`
+    `cluster: minikube`
+    `user: minikube`
+  `name: minikube`
+    `current-context: minikube`
+    `kind: Config`
+    `preferences: {}`
+    `users:`
+- `name: minikube`
+  `user:`
+    `client-certificate: /home/jmutai/.minikube/client.crt`
+    `client-key: /home/jmutai/.minikube/client.key`
+  `To check running nodes:`
 
-$ minikube ssh
+`$ kubectl get nodes`
+`NAME       STATUS    ROLES     AGE       VERSION`
+`minikube   Ready     master    13m       v1.10.0`
 
-                         _             _            
-            _         _ ( )           ( )           
-  ___ ___  (_)  ___  (_)| |/')  _   _ | |_      __  
-/' _ ` _ `\| |/' _ `\| || , <  ( ) ( )| '_`\  /'__`\
-| ( ) ( ) || || ( ) || || |\`\ | (_) || |_) )(  ___/
-(_) (_) (_)(_)(_) (_)(_)(_) (_)`\___/'(_,__/'`\____)
+#### Access minikube VM using ssh:
 
-$ sudo su -
-To stop a running local kubernetes cluster, run:
+`$ minikube ssh`
 
-$ minikube stop
-To delete a local kubernetes cluster, use:
+`$ sudo su -`
+`To stop a running local kubernetes cluster, run:`
 
-$ minikube delete
-Step 7: Enable Kubernetes Dashboard
+`$ minikube stop`
+`To delete a local kubernetes cluster, use:`
+
+`$ minikube delete`
+
+
+
+#### Enable Kubernetes Dashboard
+
 Kubernete ships with a web dashboard which allows you to manage your cluster without interacting with a command line. The dashboard addon is installed and enabled by default on minikube.
 
-$ minikube addons list
+`$ minikube addons list`
 
-- addon-manager: enabled
-- coredns: disabled
-- dashboard: enabled
-- default-storageclass: enabled
-- efk: disabled
-- freshpod: disabled
-- heapster: disabled
-- ingress: disabled
-- kube-dns: enabled
-- metrics-server: disabled
-- registry: disabled
-- registry-creds: disabled
-- storage-provisioner: enabled
-To open directly on your default browser, use:
+- `addon-manager: enabled`
+- `coredns: disabled`
+- `dashboard: enabled`
+- `default-storageclass: enabled`
+- `efk: disabled`
+- `freshpod: disabled`
+- `heapster: disabled`
+- `ingress: disabled`
+- `kube-dns: enabled`
+- `metrics-server: disabled`
+- `registry: disabled`
+- `registry-creds: disabled`
+- `storage-provisioner: enabled`
+`To open directly on your default browser, use:`
 
-$ minikube dashboard
-To get the URL of the dashboard
+`$ minikube dashboard`
+`To get the URL of the dashboard`
 
-$ minikube dashboard --url
-http://192.168.39.117:30000
+`$ minikube dashboard --url`
+`http://192.168.39.117:30000`
