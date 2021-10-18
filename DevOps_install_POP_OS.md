@@ -315,7 +315,7 @@ To View Config, use:
 `$ minikube stop`
 `To delete a local kubernetes cluster, use:`
 
-`$ minikube delete`
+`$ minikube delete`ls -ltra
 
 
 
