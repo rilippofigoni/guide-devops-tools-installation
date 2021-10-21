@@ -91,6 +91,9 @@ sudo docker run hello-world
 
 `id -nG`
 
+#### Remove docker container images (ALL)
+
+`docker rmi $(docker images -q) -f`   
 
 
 ### 4 - INSTALL HELM3
